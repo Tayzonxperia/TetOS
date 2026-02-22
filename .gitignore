@@ -1,0 +1,41 @@
+# Exclude everything in the target
+# directory as it gets generated.
+Target/*
+
+# Exclude compiler-specific dirs.
+nimcache
+zig-out
+.zig-cache
+
+
+# Exclude compiler-specific dirs
+# that appear in src as well.
+src/nimcache
+src/zig-out
+src/.zig-cache
+
+# Exclude top level dir junk.
+*.log
+*.log.*
+*.tmp
+*.tmp.*
+*.tar
+*.tar.*
+*.exe
+*.msi
+*.bin
+*.lib
+*.o
+*.a
+*.z
+*.swp
+*.vscode
+*.idea
+
+# Exclude my (Wakana's) 
+# experimentation ground.
+EXPR
+
+# And my/devs STYLE
+# documentation
+STYLE.md
