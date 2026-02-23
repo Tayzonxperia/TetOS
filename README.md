@@ -37,8 +37,7 @@ The build system is written in:
 
 
 Made for the UTAUloid and chimera **Kasane Teto**. It aims to bring new meaning to what a
-operating system can be, inspired by a similar approach to visionary approach of those like
-Terry Davis.
+operating system can be, inspired by Terry Davis' TempleOS
 
 
 #### Project artifacts:
