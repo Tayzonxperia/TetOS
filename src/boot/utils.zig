@@ -1,7 +1,6 @@
 const root = @import("../root.zig");
 
-
-
+const text_output = @import("text_output.zig");
 
 
 /// HANG_SYSTEM
@@ -47,3 +46,15 @@ pub inline fn NO_OPERATION() void
 }
 
 
+/// BREAKPOINT
+/// ----------
+/// BREAKPOINT is a debug function and prints a error
+/// to the console, so we can verify and trace errors
+pub noinline fn BREAKPOINT(e: anyerror, out: text_output.TextOutput) void
+{
+    const name = @errorName(e);
+
+    _ = out.writeString(name, true) catch {};
+    
+    HALT_SYSTEM();
+}

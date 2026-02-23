@@ -15,7 +15,7 @@ pub const textInputProtocol = efi.protocol.SimpleTextInput;
 
 /// key
 /// ---
-/// A shorthand for `efi.protocol.SimpleTextOutput.Key
+/// A shorthand for `efi.protocol.SimpleTextOutput.Key`
 pub const key = efi.protocol.SimpleTextInput.Key;
 
 

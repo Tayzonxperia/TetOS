@@ -133,8 +133,8 @@ pub const TextOutput = struct
         // Define the attributes of the stdout console
         const attributeOut: attribute =     // Define the type manually
         .{
-            .foreground = attribute.ForegroundColor.lightred,
-            .background = attribute.BackgroundColor.black
+            .foreground = attribute.ForegroundColor.lightmagenta,
+            .background = attribute.BackgroundColor.cyan
         };
 
         // Define the attributes of the stderr console
@@ -190,6 +190,7 @@ pub const TextOutput = struct
             else => return Error.Undefined
         };
 
+        // Return fully filled
         return @This()
         {
             .stdOut =

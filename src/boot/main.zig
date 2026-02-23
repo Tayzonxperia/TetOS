@@ -90,7 +90,7 @@ pub fn mainFunc() efi.Error!void
     _ = gop.paintScreen(pixel[0..])
     catch { return utils.HALT_SYSTEM(); };
 
-    _ = input.writeScreen(output) catch |e| dbg.HALTERR(e, output);
+    _ = input.inputToConsole(output) catch |e| dbg.HALTERR(e, output);
 
     utils.HANG_SYSTEM();
 }

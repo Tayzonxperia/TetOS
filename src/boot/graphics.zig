@@ -1,6 +1,5 @@
 const root = @import("../root.zig");
 
-const system = @import("system.zig");
 const utils = @import("utils.zig");
 
 const efi = root.Standard.uefi;
