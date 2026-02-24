@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Copyright (C) 2025-2026 Taylor (Wakana Kisarazu)
 const root = @import("../root.zig");
 
 pub const system = @import("system.zig");
@@ -5,9 +7,8 @@ pub const utils = @import("utils.zig");
 pub const text_output = @import("text_output.zig");
 pub const text_input = @import("text_input.zig");
 pub const graphics = @import("graphics.zig");
-pub const dbg = @import("debug.zig");
 pub const efi = root.Standard.uefi;
-
+pub const core = @import("core.zig");
 
 
 pub fn mainFunc() efi.Error!void
@@ -15,8 +16,15 @@ pub fn mainFunc() efi.Error!void
     const systemCtx = system.systemInit();
     const systemTable = systemCtx.systemTable;
     const bootSvc = systemTable.boot_services.?;
-    
+    const bootsvc = systemTable.boot_services;
+
     // Initzalize default structs
+    var systable = core.SystemTable
+    {};
+
+    var bootservice = core.BootServices
+    {};
+
     var output = text_output.TextOutput
     {
         .stdOut = .{},
@@ -57,6 +65,10 @@ pub fn mainFunc() efi.Error!void
     };
 
     // Initzalize the structs fully
+    systable = core.SystemTable.init(systemTable);
+
+    bootservice = core.BootServices.init(bootsvc);
+
     output = text_output.TextOutput.init(systemTable.con_out.?, systemTable.std_err.?, true)
     catch unreachable;
 
@@ -69,7 +81,6 @@ pub fn mainFunc() efi.Error!void
     // dud
     _ = outputProtocol.?;
     _ = inputProtocol.?;
-
   
     var pixel: [100*100]efi.protocol.GraphicsOutput.BltPixel = undefined;
 
@@ -90,7 +101,7 @@ pub fn mainFunc() efi.Error!void
     _ = gop.paintScreen(pixel[0..])
     catch { return utils.HALT_SYSTEM(); };
 
-    _ = input.inputToConsole(output) catch |e| dbg.HALTERR(e, output);
+    _ = input.inputToConsole(output) catch {};
 
     utils.HANG_SYSTEM();
 }

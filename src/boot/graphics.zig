@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: GPL-2.0-or-later
+// Copyright (C) 2025-2026 Taylor (Wakana Kisarazu)
 const root = @import("../root.zig");
 
 const utils = @import("utils.zig");
@@ -73,7 +75,7 @@ pub const GraphicsOutput = struct
     /// A device failure was encountered. \
     /// `InvalidParam`      -> 
     /// A invalid paramater was passed. \
-    /// `ProtocolFailure`   ->
+    /// `Protocol`   ->
     /// The protocol failed to start or
     /// failed to be located. \
     /// `Unsupported`       -> A unsupported
@@ -88,7 +90,7 @@ pub const GraphicsOutput = struct
         InvalidParam,
         Protocol,
         Unsupported,
-        Undefined,
+        Undefined
     };
 
     /// init
@@ -134,8 +136,8 @@ pub const GraphicsOutput = struct
                 .resV = curModeInfo.vertical_resolution,
                 .pixFmt = curModeInfo.pixel_format,
                 .pixBit = curModeInfo.pixel_information,
-                .pixPerScanLine = curModeInfo.pixels_per_scan_line,
-            },
+                .pixPerScanLine = curModeInfo.pixels_per_scan_line
+            }
         };
     }
 
@@ -146,15 +148,21 @@ pub const GraphicsOutput = struct
     /// The resolution is pre-calculated and is garanteed to be correct.
     pub fn paintScreen(self: @This(), buf: [*]graphicsProtocol.BltPixel) Error!void
     {   
-        // Resolve protocol.
+        // Resolve protocol
         const protocol = self.protocol orelse return Error.Protocol;
 
-        const resH = self.modeInfo.resH;    // Horizontal.
-        const resV = self.modeInfo.resV;    // Vertical.
+        const resH = self.modeInfo.resH;    // Horizontal
+        const resV = self.modeInfo.resV;    // Vertical
 
-        // Draw it with block transfer video fill.
-        protocol.blt(buf, bltOperation.blt_video_fill,
-        0, 0, 0, 0, resH, resV, 0)
+        // Draw it with block transfer video fill
+        protocol.blt
+        (
+            buf, 
+            bltOperation.blt_video_fill,
+            0, 0, 
+            0, 0, 
+            resH, resV, 0
+        )
         catch |e| switch (e)
         {
             error.DeviceError => return Error.Device,

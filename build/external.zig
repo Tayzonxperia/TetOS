@@ -10,3 +10,17 @@ const std = root.Standard.std;
 const builtin = root.Standard.builtin;
 const build = root.Standard.build;
 
+
+
+pub const ImageFormat = struct 
+{
+    Blue: u8,
+    Green: u8,
+    Red: u8,
+    Reserved: u8    // Optional alpha
+};
+
+pub fn convertImageData(builder: *build, image: []const u8) ImageFormat
+{
+    
+}

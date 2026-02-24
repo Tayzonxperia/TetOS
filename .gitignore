@@ -36,6 +36,9 @@ src/.zig-cache
 # experimentation ground.
 EXPR
 
+# Exclude this, for now
+Assets/*
+
 # And my/devs STYLE
 # documentation
 STYLE.md

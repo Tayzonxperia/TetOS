@@ -34,12 +34,8 @@ pub fn loadConfig(builder: *build) ConfigProfile
     const serialSupport = builder.option
     (bool, "serial", "Enable serial support") orelse false; 
 
-    const optimizeMode = builder.standardOptimizeOption
-    (
-        .{
-            .preferred_optimize_mode = .Debug
-        }
-    );
+    const optimizeMode = builder.option
+    (builtin.OptimizeMode, "build", "Build mode");
 
     const archType = builder.option
     (target.Cpu.Arch, "arch", "Target CPU architecture")
@@ -92,7 +88,7 @@ pub fn loadConfig(builder: *build) ConfigProfile
                 fancyFeatures,
                 serialSupport,
 
-                optimizeMode,
+                optimizeMode orelse builtin.OptimizeMode.Debug,
                 archType,
 
                 bootloaderTarget.result.os.tag,
@@ -109,7 +105,7 @@ pub fn loadConfig(builder: *build) ConfigProfile
         .experimental = experimentalFeatures,
         .fancy = fancyFeatures,
         .serial = serialSupport,
-        .optimize = optimizeMode,
+        .optimize = optimizeMode orelse builtin.OptimizeMode.Debug,
 
         // Separate targets
         .bootloaderTarget = bootloaderTarget,
