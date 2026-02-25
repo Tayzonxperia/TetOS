@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: GPL-2.0-or-later
 // Copyright (C) 2025-2026 Taylor (Wakana Kisarazu)
+// ------------------------------------------------
+// TextInput code needed for the TetoEFI bootloader
+// ------------------------------------------------
 const root = @import("../root.zig");
 
-const utils = @import("utils.zig");
 const text_output = @import("text_output.zig");
 
 const efi = root.Standard.uefi;

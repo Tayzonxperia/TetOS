@@ -8,6 +8,6 @@ pub fn main() self.efi.Error!void
 {
     self.mainFunc() catch
     {
-        self.utils.NO_OPERATION();
+        self.assembly.NO_OPERATION();
     };
 }

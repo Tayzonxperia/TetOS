@@ -1,6 +1,9 @@
 # Exclude everything in the target
 # directory as it gets generated.
 Target/*
+src/Target
+src/boot/Target
+src/boot/arch/Target
 
 # Exclude compiler-specific dirs.
 nimcache

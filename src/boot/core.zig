@@ -5,14 +5,17 @@
 // ------------------------------------------------
 const root = @import("../root.zig");
 
-const assembly = @import("assembly.zig");
+const assembly = @import("arch/main.zig").Assembly;
 
-const builtin = root.Standard.builtin;
 const efi = root.Standard.uefi;
-const coff = root.Standard.coff;
 const utf16Str = root.Standard.unicode.utf8ToUtf16LeStringLiteral;
 const utf16Buf = root.Standard.unicode.utf8ToUtf16LeAllocZ;
 
+
+
+/// efiError
+/// --------
+pub const efiError = efi.Error;
 
 
 /// efiSystemTab
@@ -28,11 +31,6 @@ pub const efiBootSvc = @TypeOf(efi.system_table.boot_services);
 /// efiConfigTab
 /// ---------------
 pub const efiConfigTab = @TypeOf(efi.system_table.configuration_table);
-
-
-/// efiError
-/// --------
-pub const efiError = efi.Error;
 
 
 /// SystemTable
@@ -74,6 +72,7 @@ pub const SystemTable = struct
         };
     }
 };
+
 
 /// BootServices
 /// ------------
@@ -125,20 +124,17 @@ pub const ConfigTable = struct
 };
 
 
-/// MemoryAllocator
-/// ---------------
-pub const MemoryAllocator = struct 
+pub const MemoryManagement = struct 
 {   
-    pub const pointer = efi.pool_allocator.ptr;
-    pub const table = efi.pool_allocator.vtable;
+    pub inline fn allocPages(s: efiBootSvc, num: usize) [][4096]u8
+    {   
+        // Make sure boot services exist.
+        const svc = s.?;
 
-    pub const alloc = efi.pool_allocator.alloc;
-    pub const realloc = efi.pool_allocator.realloc;
-    pub const dealloc = efi.pool_allocator.free;
+        // malloc
+        const pages = svc.allocatePages(.any, .boot_services_data, num)
+        catch @panic("[!] Failed to allocate pages");
 
-    pub const create = efi.pool_allocator.create;
-    pub const resize = efi.pool_allocator.resize;
-    pub const dupe = efi.pool_allocator.dupe;
-    pub const destroy = efi.pool_allocator.destroy;
+        return pages;
+    }   
 };
-

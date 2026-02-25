@@ -41,11 +41,13 @@ pub fn loadConfig(builder: *build) ConfigProfile
     (target.Cpu.Arch, "arch", "Target CPU architecture")
     orelse .x86_64;
 
+
     const bootloaderTarget = builder.resolveTargetQuery
     (
         .{
             .cpu_arch = archType,
             .os_tag = .uefi,
+            .ofmt = .coff,
             .abi = .none 
         }
     );
@@ -55,7 +57,8 @@ pub fn loadConfig(builder: *build) ConfigProfile
         .{
             .cpu_arch = archType,
             .os_tag = .freestanding,
-            .abi = .none 
+            .ofmt = .c,
+            .abi = .none,
         }
     );
 
